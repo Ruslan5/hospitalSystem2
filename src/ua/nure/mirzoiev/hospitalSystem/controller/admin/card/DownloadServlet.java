@@ -49,115 +49,89 @@ public class DownloadServlet extends HttpServlet {
 	            "LEFT JOIN roles pat_role ON pat.role_id = pat_role.id " +
 	            "LEFT JOIN roles nurse_role ON nurse.role_id = nurse_role.id WHERE card.id=?";
 	 
-//    protected void doGet(HttpServletRequest request,
-//            HttpServletResponse response) throws ServletException, IOException {
-//    	int id = Integer.parseInt(request.getParameter("id"));
-//    	try {
-//			Class.forName("com.mysql.cj.jdbc.Driver");
-//		} catch (ClassNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//        Connection connection = null;
-//        PreparedStatement statement = null;
-//        ResultSet resultSet = null;
-//        PatientCard patientCard = new PatientCard();
-//
-//        try {
-//            connection = DriverManager.getConnection(url, userName, password);
-//            statement = connection.prepareStatement(FIND_CARD_BY_ID);
-//            patientCard = cardService.downloadCardById(id);
-//            statement.setInt(1, id);
-//
-//            // queries the database
-// 
-//            resultSet = statement.executeQuery();
-//            if (resultSet.next()) {
-//                // gets file name and file blob data
-//                String fileName = resultSet.getString(patientCard.toString());
-//                Blob blob = resultSet.getBlob(patientCard.toString());
-//                InputStream inputStream = blob.getBinaryStream();
-//                int fileLength = inputStream.available();
-//                 
-//                System.out.println("fileLength = " + fileLength);
-// 
-//                ServletContext context = getServletContext();
-// 
-//                // sets MIME type for the file download
-//                String mimeType = context.getMimeType(fileName);
-//                if (mimeType == null) {        
-//                    mimeType = "application/octet-stream";
-//                }              
-//                 
-//                // set content properties and header attributes for the response
-//                response.setContentType(mimeType);
-//                response.setContentLength(fileLength);
-//                String headerKey = "Content-Disposition";
-//                String headerValue = String.format("attachment; filename=\"%s\"", fileName);
-//                response.setHeader(headerKey, headerValue);
-// 
-//                // writes the file to the client
-//                OutputStream outStream = response.getOutputStream();
-//                 
-//                byte[] buffer = new byte[BUFFER_SIZE];
-//                int bytesRead = -1;
-//                 
-//                while ((bytesRead = inputStream.read(buffer)) != -1) {
-//                    outStream.write(buffer, 0, bytesRead);
-//                }
-//                 
-//                inputStream.close();
-//                outStream.close();             
-//            } else {
-//                // no file found
-//                response.getWriter().print("File not found for the id: " + id);  
-//            }
-//        } catch (SQLException ex) {
-//            ex.printStackTrace();
-//            response.getWriter().print("SQL Error: " + ex.getMessage());
-//        } catch (IOException ex) {
-//            ex.printStackTrace();
-//            response.getWriter().print("IO Error: " + ex.getMessage());
-//        } catch (ClassNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} finally {
-//            if (connection != null) {
-//                // closes the database connection
-//                try {
-//                    connection.close();
-//                } catch (SQLException ex) {
-//                    ex.printStackTrace();
-//                }
-//            }          
-//        }
-//    }
-	 protected void doPost(HttpServletRequest request,
-	            HttpServletResponse response) throws ServletException, IOException {
-		 String patientName = request.getParameter("firstName");
-			String patientLastName = request.getParameter("lastName");
+   protected void doGet(HttpServletRequest request,
+           HttpServletResponse response) throws ServletException, IOException {
+   	int id = Integer.parseInt(request.getParameter("id"));
+   	try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+       Connection connection = null;
+       PreparedStatement statement = null;
+       ResultSet resultSet = null;
+       PatientCard patientCard = new PatientCard();
 
-			// to obtain the bytes for unsafe characters
-			String fileName = URLEncoder.encode(patientName + patientLastName + ".txt", "UTF-8");
-			String filePath = "C:/workspace_eclipse/SummaryTask4/WebContent/WEB-INF/DischangedPatients/" + patientName
-					+ patientLastName + ".txt";
+       try {
+           connection = DriverManager.getConnection(url, userName, password);
+           statement = connection.prepareStatement(FIND_CARD_BY_ID);
+           patientCard = cardService.downloadCardById(id);
+           statement.setInt(1, id);
 
-			response.setHeader("Content-disposition", "attachment; filename=" + fileName);
-			File file = new File(filePath);
+           // queries the database
 
-			// This should send the file to browser
-			OutputStream out = response.getOutputStream();
-			FileInputStream in = new FileInputStream(file);
-			byte[] buffer = new byte[4096];
-			int length;
-			while ((length = in.read(buffer)) > 0) {
-				out.write(buffer, 0, length);
-			}
-			in.close();
-			out.flush();
-			
-			request.getRequestDispatcher(getServletContext().getContextPath() + url).forward(request, response);
+           resultSet = statement.executeQuery();
+           if (resultSet.next()) {
+               // gets file name and file blob data
+               String fileName = resultSet.getString(patientCard.toString());
+               Blob blob = resultSet.getBlob(patientCard.toString());
+               InputStream inputStream = blob.getBinaryStream();
+               int fileLength = inputStream.available();
+                
+               System.out.println("fileLength = " + fileLength);
 
-	 }
+               ServletContext context = getServletContext();
+
+               // sets MIME type for the file download
+               String mimeType = context.getMimeType(fileName);
+               if (mimeType == null) {        
+                   mimeType = "application/octet-stream";
+               }              
+                
+               // set content properties and header attributes for the response
+               response.setContentType(mimeType);
+               response.setContentLength(fileLength);
+               String headerKey = "Content-Disposition";
+               String headerValue = String.format("attachment; filename=\"%s\"", fileName);
+               response.setHeader(headerKey, headerValue);
+
+               // writes the file to the client
+               OutputStream outStream = response.getOutputStream();
+                
+               byte[] buffer = new byte[BUFFER_SIZE];
+               int bytesRead = -1;
+                
+               while ((bytesRead = inputStream.read(buffer)) != -1) {
+                   outStream.write(buffer, 0, bytesRead);
+               }
+                
+               inputStream.close();
+               outStream.close();             
+           } else {
+               // no file found
+               response.getWriter().print("File not found for the id: " + id);  
+           }
+       } catch (SQLException ex) {
+           ex.printStackTrace();
+           response.getWriter().print("SQL Error: " + ex.getMessage());
+       } catch (IOException ex) {
+           ex.printStackTrace();
+           response.getWriter().print("IO Error: " + ex.getMessage());
+       } catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+           if (connection != null) {
+               // closes the database connection
+               try {
+                   connection.close();
+               } catch (SQLException ex) {
+                   ex.printStackTrace();
+               }
+           }          
+       }
+   }
+	
     
 }
