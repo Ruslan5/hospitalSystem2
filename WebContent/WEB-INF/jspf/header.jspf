@@ -1,0 +1,179 @@
+<%@ include file="/WEB-INF/jspf/directive/page.jspf"%>
+<%@ page import="ua.nure.mirzoiev.hospitalSystem.entity.Role" %>
+<%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
+
+
+ <div class="navbar-brand">
+ 
+ <div class="header">
+ 
+ 
+	
+		
+		
+<%--=========================================================================== 
+ADMIN MENU
+===========================================================================--%> 
+		<c:if test="${sessionScope.role =='admin'}">
+	
+<nav class="navbar navbar-expand-lg fixed-top ">
+
+  
+	<a class="navbar-brand" href="/HospitalSystem/login.jsp"><fmt:message key="Home"/></a>
+	
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">  
+	 	<span class="navbar-toggler-icon text-center"><fmt:message key="Menu"/></span>
+	</button>
+
+	<div class="collapse navbar-collapse " id="navbarSupportedContent">     
+	  <ul class="navbar-nav mr-4">
+		 <li class="nav-item">
+		     <a class="nav-link" href="/HospitalSystem/adminPage.jsp"><fmt:message key="Admin_Page"/></a>       
+		  </li>
+		       
+		<li class="nav-item">
+		    <a class="nav-link " data-value="patients"href="/HospitalSystem/admin/patients"><fmt:message key="Patients"/></a>    
+		 </li>
+		 
+		<li class="nav-item"> 
+		    <a class="nav-link " data-value="card" href="/HospitalSystem/admin/patientCards"><fmt:message key="Cards"/></a>         
+		</li>   
+		
+		
+		<li class="nav-item hello_header"> 
+		<fmt:message key='Hello'/><c:out value=", ${person.name} ${person.surname} ${sessionScope.role}"/> 	
+		</li>
+		
+		<li class="nav-item"> 
+		 <a class="nav-link" data-value="contact" href="/HospitalSystem/logout"><fmt:message key='Logout'/></a> 	
+		</li> 
+		
+	  </ul> 
+	</div>
+	
+	
+</nav>
+
+
+
+</c:if>
+
+<%--=========================================================================== 
+Doctor MENU
+===========================================================================--%> 
+<c:if test="${sessionScope.role =='doctor'}">
+		
+<nav class="navbar navbar-expand-lg fixed-top ">  
+	<!-- <a class="navbar-brand" href="/HospitalSystem/login.jsp">Home</a> -->
+
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">  
+	 	<span class="navbar-toggler-icon text-center"><fmt:message key='Menu'/></span>
+	</button>
+
+	<div class="collapse navbar-collapse " id="navbarSupportedContent">     
+	  <ul class="navbar-nav mr-4">
+		       
+		<li class="nav-item">
+		    <a class="nav-link " data-value="patients"href="/HospitalSystem/staff/patients"><fmt:message key='Patients'/></a>    
+		 </li>
+		  
+		
+		<li class="nav-item hello_header"> 
+		<fmt:message key='Hello'/><c:out value=", ${pearson.name} ${pearson.surname} ${sessionScope.role}"/>	
+		</li>
+		
+		<li class="nav-item"> 
+		 <a class="nav-link" data-value="contact" href="/HospitalSystem/logout"><fmt:message key='Logout'/></a> 	
+		</li> 
+		
+	  </ul> 
+	</div>
+</nav>
+
+</c:if>
+
+<%--=========================================================================== 
+Nurse MENU
+===========================================================================--%> 
+<c:if test="${sessionScope.role =='nurse'}">
+		
+<nav class="navbar navbar-expand-lg fixed-top ">  
+	<!--  <a class="navbar-brand" href="/HospitalSystem/login.jsp">Home</a>-->
+
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">  
+	 	<span class="navbar-toggler-icon text-center"><fmt:message key='Menu'/></span>
+	</button>
+
+	<div class="collapse navbar-collapse " id="navbarSupportedContent">     
+	  <ul class="navbar-nav mr-4">
+		 
+		<li class="nav-item"> 
+		    <a class="nav-link" data-value="cards" href="/HospitalSystem/staff/patients"><fmt:message key='Cards'/></a>         
+		</li>   
+		
+		<li class="nav-item"> 
+		 <a class="nav-link" data-value="contact" href="#"><fmt:message key='Contact'/></a>
+		</li> 
+		
+		<li class="nav-item hello_header"> 
+		<fmt:message key='Hello'/><c:out value=", ${pearson.name} ${pearson.surname} ${sessionScope.role}"/>	
+		</li>
+		
+		<li class="nav-item"> 
+		 <a class="nav-link" data-value="contact" href="/HospitalSystem/logout"><fmt:message key='Logout'/></a> 	
+		</li> 
+	
+	  </ul>
+	 
+	</div>
+</nav>
+
+</c:if>
+
+<%--=========================================================================== 
+Login MENU
+===========================================================================--%> 
+		<c:if test="${empty role}">
+		
+<nav class="navbar navbar-expand-lg fixed-top ">  
+	<a class="navbar-brand" href="/HospitalSystem/login.jsp"><fmt:message key='Hello'/>Home</a>
+
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">  
+	 	<span class="navbar-toggler-icon text-center"><fmt:message key='Menu'/></span>
+	</button>
+
+	<div class="collapse navbar-collapse " id="navbarSupportedContent">     
+	  <ul class="navbar-nav mr-4">
+	  
+		<li class="nav-item">  
+		   <a class="nav-link " data-value="team" href="#"><fmt:message key='Our_Team'/></a>
+	    </li>  
+	    
+		<li class="nav-item"> 
+		 <a class="nav-link " data-value="contact" href="#"><fmt:message key='Contact'/></a>
+		</li> 
+		
+		<li class="nav-item hello_header"> 
+		<fmt:message key='Hello'/><c:out value="! ${pearson.name} ${pearson.surname} ${sessionScope.role}"/> 	
+		</li>
+		
+		<li class="nav-item"> 
+		 <a class="nav-link" data-value="contact" href="/HospitalSystem/login"><fmt:message key='Login'/></a> 	
+		</li> 
+		
+	  </ul> 
+	</div>
+</nav>
+
+
+
+</c:if>
+
+
+<c:if test="${empty role and title ne 'Login'}">
+	<div id="rightHeader">
+		<a class="navbar-brand" href="login.jsp"><fmt:message key='Login'/></a>
+	</div>
+</c:if>
+</div>
+</div>

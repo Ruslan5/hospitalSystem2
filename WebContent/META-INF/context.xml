@@ -1,0 +1,12 @@
+<Context>
+    <Resource name="jdbc/hospitalTest2"
+              auth="Container"
+              type="javax.sql.DataSource"
+              maxActive="100" maxIdle="30" maxWait="10000"
+              username="root" password="root"
+              driverClassName="com.mysql.cj.jdbc.Driver"
+              defaultAutoCommit="false"
+        	  defaultTransactionIsolation="READ_COMMITTED"
+              connectionProperties="serverTimezone=UTC;useUnicode=yes;characterEncoding=utf8;"
+              url="jdbc:mysql://localhost/hospitalTest2"/>
+</Context>

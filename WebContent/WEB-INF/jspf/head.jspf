@@ -1,0 +1,23 @@
+<%@ include file="/WEB-INF/jspf/directive/page.jspf" %>
+<%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
+
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>
+		${title}
+	</title>
+	
+<%--=========================================================================== 
+Bind CSS.
+===========================================================================----%>
+	<link rel="stylesheet" type="text/css" media="screen" href="${pageContext.request.contextPath}/style/bootstrap.css"/>
+	<link rel="stylesheet" type="text/css" media="screen" href="${pageContext.request.contextPath}/style/bootstrap-grid.css"/>
+
+	<link rel="stylesheet" type="text/css" media="screen" href="${pageContext.request.contextPath}/style/main.css"/>
+	
+<%--=========================================================================== 
+
+===========================================================================--%> 
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+</head>
